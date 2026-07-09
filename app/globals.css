@@ -1,0 +1,129 @@
+@import 'tailwindcss';
+
+/* ============================================================
+   Design tokens — extraídos da referência visual
+   ============================================================ */
+@theme {
+  /* Cores */
+  --color-paper: #f1f0ed;
+  --color-paper-2: #f6f5f3;
+  --color-surface: #ffffff;
+
+  --color-navy-950: #14275f;
+  --color-navy-900: #1a3277;
+  --color-navy-800: #1d3a8c; /* primária — títulos, botões */
+  --color-navy-700: #234aa8;
+  --color-navy-500: #2f63d4; /* facetas mais claras do logo/gráfico */
+  --color-navy-300: #7d9de6;
+
+  --color-ink: #14213d;
+  --color-body: #575757;
+  --color-muted: #8b8b8b;
+  --color-line: #e3e2de;
+
+  /* Tipografia (variáveis vêm do next/font) */
+  --font-sans: var(--font-inter), ui-sans-serif, system-ui, sans-serif;
+  --font-display: var(--font-montserrat), var(--font-inter), sans-serif;
+
+  /* Raios e sombras */
+  --radius-card: 12px;
+  --shadow-soft: 0 1px 2px rgba(20, 33, 61, 0.04), 0 8px 24px rgba(20, 33, 61, 0.06);
+  --shadow-btn: 0 8px 20px rgba(29, 58, 140, 0.22);
+
+  /* Container */
+  --spacing-gutter: 1.5rem;
+}
+
+/* ============================================================
+   Base
+   ============================================================ */
+* {
+  min-width: 0;
+}
+
+html {
+  scroll-behavior: smooth;
+  -webkit-text-size-adjust: 100%;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+}
+
+body {
+  background-color: var(--color-paper);
+  color: var(--color-body);
+  font-family: var(--font-sans);
+  -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
+}
+
+/* Deslocamento das âncoras por causa do header fixo */
+section[id],
+[id].scroll-anchor {
+  scroll-margin-top: 88px;
+}
+
+/* Foco visível e acessível */
+:focus-visible {
+  outline: 2px solid var(--color-navy-700);
+  outline-offset: 3px;
+  border-radius: 4px;
+}
+
+::selection {
+  background: var(--color-navy-800);
+  color: #fff;
+}
+
+/* ============================================================
+   Utilitários de composição
+   ============================================================ */
+.container-page {
+  width: 100%;
+  max-width: 76rem;
+  margin-inline: auto;
+  padding-inline: var(--spacing-gutter);
+}
+
+.eyebrow {
+  font-family: var(--font-sans);
+  font-weight: 700;
+  font-size: 0.78rem;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: var(--color-navy-800);
+}
+
+.display {
+  font-family: var(--font-display);
+  font-weight: 800;
+  letter-spacing: -0.02em;
+  line-height: 1.02;
+  color: var(--color-navy-800);
+}
+
+/* Animação de entrada suave */
+@keyframes rise {
+  from {
+    opacity: 0;
+    transform: translateY(14px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.rise {
+  animation: rise 0.7s cubic-bezier(0.16, 1, 0.3, 1) both;
+}
