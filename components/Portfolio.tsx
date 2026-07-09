@@ -16,39 +16,39 @@ export default function Portfolio() {
         <div className="section-head">
           <div>
             <p className="eyebrow">Projetos</p>
-            <h2 className="display mt-4 max-w-[14ch] text-[clamp(2rem,4vw,3.2rem)]">
+            <h2 className="display mt-3 max-w-[16ch] text-[clamp(1.75rem,6vw,3.2rem)] sm:mt-4">
               Projetos em diferentes materiais e escalas
             </h2>
           </div>
-          <p className="text-base leading-relaxed text-body">
+          <p className="text-sm leading-relaxed text-body sm:text-base">
             Produções gráficas conduzidas do orçamento à entrega — em papel, acrílico, madeira,
             metais e combinações para redes e campanhas.
           </p>
         </div>
 
-        <ul className="grid gap-5 sm:grid-cols-2 lg:grid-cols-12">
+        <ul className="grid grid-cols-1 gap-4 sm:grid-cols-2 sm:gap-5 lg:grid-cols-12">
           {projects.map((p) => (
             <li
               key={p.title}
               className={`group cursor-pointer ${p.featured ? 'sm:col-span-2 lg:col-span-6' : 'lg:col-span-3'}`}
             >
               <div
-                className={`relative flex overflow-hidden rounded-[var(--radius-card)] bg-gradient-to-br ${p.tone} p-6 ${
-                  p.featured ? 'aspect-[16/9] sm:aspect-[2/1]' : 'aspect-[4/3]'
+                className={`relative flex overflow-hidden rounded-[var(--radius-card)] bg-gradient-to-br ${p.tone} p-5 sm:p-6 ${
+                  p.featured ? 'min-h-[12.5rem] sm:aspect-[2/1] sm:min-h-0' : 'min-h-[11rem] sm:aspect-[4/3] sm:min-h-0'
                 } items-end`}
               >
                 <span
                   aria-hidden="true"
-                  className="pointer-events-none absolute -right-6 -top-6 h-32 w-32 rotate-45 rounded-lg bg-white/10 transition-transform duration-500 group-hover:scale-125"
+                  className="pointer-events-none absolute -right-6 -top-6 h-28 w-28 rotate-45 rounded-lg bg-white/10 transition-transform duration-500 group-hover:scale-125 sm:h-32 sm:w-32"
                 />
-                <div className="relative z-10 w-full">
-                  <span className="text-xs font-semibold uppercase tracking-wider text-white/80">
+                <div className="relative z-10 w-full min-w-0">
+                  <span className="text-[0.68rem] font-semibold uppercase tracking-wider text-white/80 sm:text-xs">
                     {p.tag}
                   </span>
-                  <h3 className="mt-2 max-w-md font-display text-lg font-bold text-white lg:text-xl">
+                  <h3 className="mt-2 max-w-md font-display text-base font-bold text-white sm:text-lg lg:text-xl">
                     {p.title}
                   </h3>
-                  <span className="mt-4 inline-flex items-center gap-2 text-sm font-semibold text-white opacity-0 transition-opacity group-hover:opacity-100">
+                  <span className="mt-3 inline-flex items-center gap-2 text-sm font-semibold text-white sm:mt-4 sm:opacity-0 sm:transition-opacity sm:group-hover:opacity-100">
                     Ver projeto <ArrowRight className="h-4 w-4" />
                   </span>
                 </div>

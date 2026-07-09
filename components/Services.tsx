@@ -30,7 +30,7 @@ export default function Services() {
         <div className="section-head">
           <div>
             <p className="eyebrow">O que eu faço</p>
-            <h2 className="display mt-4 max-w-[14ch] text-[clamp(2rem,4vw,3.2rem)]">
+            <h2 className="display mt-3 max-w-[16ch] text-[clamp(1.75rem,6vw,3.2rem)] sm:mt-4">
               Do briefing à entrega, cada etapa coberta
             </h2>
           </div>
@@ -40,11 +40,11 @@ export default function Services() {
           </p>
         </div>
 
-        <ul className="grid gap-5 sm:grid-cols-2 xl:grid-cols-4">
+        <ul className="grid grid-cols-1 gap-4 sm:grid-cols-2 sm:gap-5 xl:grid-cols-4">
           {services.map(({ Icon, title, desc }) => (
             <li
               key={title}
-              className="group flex h-full flex-col rounded-[var(--radius-card)] border border-line bg-surface p-7 transition-all duration-300 hover:-translate-y-1 hover:border-navy-300 hover:shadow-[var(--shadow-soft)]"
+              className="group flex h-full flex-col rounded-[var(--radius-card)] border border-line bg-surface p-5 transition-all duration-300 hover:-translate-y-1 hover:border-navy-300 hover:shadow-[var(--shadow-soft)] sm:p-6 lg:p-7"
             >
               <span className="inline-flex h-12 w-12 items-center justify-center rounded-lg bg-navy-800/8 text-navy-800 transition-colors group-hover:bg-navy-800 group-hover:text-white">
                 <Icon className="h-6 w-6" />

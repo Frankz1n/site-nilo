@@ -1,59 +1,74 @@
-import { site, whatsappUrl } from '@/lib/site';
+'use client';
+
+import { useCallback, useState } from 'react';
+import { whatsappUrl } from '@/lib/site';
 import { ArrowRight } from './icons';
-import HeroGraphic from './HeroGraphic';
+import HeroBackground from './hero/HeroBackground';
+import HeroDock from './hero/HeroDock';
 
 export default function Hero() {
+  const [dockIndex, setDockIndex] = useState(0);
+
+  const handlePrevDock = useCallback(() => {
+    setDockIndex((current) => (current - 1 + 4) % 4);
+  }, []);
+
+  const handleNextDock = useCallback(() => {
+    setDockIndex((current) => (current + 1) % 4);
+  }, []);
+
   return (
-    <section id="inicio" className="relative overflow-hidden pt-[84px]">
-      <div
-        aria-hidden="true"
-        className="pointer-events-none absolute inset-0 bg-[radial-gradient(70%_70%_at_90%_20%,rgba(120,150,232,0.22),transparent_55%)]"
-      />
-      <div className="container-page relative grid items-center gap-12 py-16 lg:grid-cols-[1.12fr_0.88fr] lg:gap-16 lg:py-24 xl:gap-24 xl:py-28">
-        <div className="rise min-w-0">
-          <div className="flex items-center gap-4">
-            <p className="eyebrow">Consultoria Gráfica em Materiais e Produção</p>
-            <span aria-hidden="true" className="hidden h-px flex-1 max-w-32 bg-navy-300 sm:block" />
-          </div>
+    <section
+      id="inicio"
+      data-hero
+      className="hero-surface relative flex min-h-svh flex-col overflow-hidden pt-[var(--header-height)] text-white"
+    >
+      <HeroBackground />
 
-          <h1 className="display mt-6 max-w-[16ch] text-[clamp(2.6rem,5.5vw,4.6rem)] leading-[0.98]">
-            Da sua demanda ao material pronto — com orçamento e produção sob controle.
-          </h1>
+      <div className="container-page relative z-10 flex min-h-0 flex-1 flex-col">
+        <div className="flex flex-1 items-center py-8 sm:py-10 lg:py-12 xl:py-14">
+          <div className="rise w-full min-w-0 max-w-3xl">
+            <div className="flex flex-col gap-3 sm:flex-row sm:items-center sm:gap-4">
+              <p className="hero-eyebrow max-w-[20rem] sm:max-w-none">
+                Consultoria Gráfica em Materiais e Produção
+              </p>
+              <span
+                aria-hidden="true"
+                className="hidden h-px flex-1 max-w-28 bg-white/25 sm:block"
+              />
+            </div>
 
-          <p className="mt-7 max-w-2xl text-[1.08rem] leading-relaxed text-body lg:text-[1.12rem]">
-            Você traz a ideia e as artes. Eu cuido do orçamento, da especificação de materiais e de
-            todo o processo de produção — em papel, acrílico, madeira, metais e muito mais.
-          </p>
+            <h1 className="hero-display mt-5 max-w-[14ch] text-[clamp(2rem,8vw,4.8rem)] sm:mt-6 sm:max-w-[12ch]">
+              Da demanda ao material pronto.
+            </h1>
 
-          <div className="mt-10 flex flex-wrap items-center gap-5 lg:gap-7">
-            <a
-              href={whatsappUrl()}
-              target="_blank"
-              rel="noopener noreferrer"
-              className="inline-flex items-center gap-2.5 rounded-lg bg-navy-800 px-7 py-4 text-sm font-semibold text-white shadow-[var(--shadow-btn)] transition-transform hover:-translate-y-0.5"
-            >
-              Solicitar orçamento
-              <ArrowRight className="h-4 w-4" />
-            </a>
-            <a
-              href="#portfolio"
-              className="group inline-flex items-center gap-2 border-b-2 border-navy-800 pb-1 text-sm font-semibold text-navy-800"
-            >
-              Ver projetos
-              <ArrowRight className="h-4 w-4 transition-transform group-hover:translate-x-0.5" />
-            </a>
+            <p className="mt-5 max-w-xl text-[1rem] leading-relaxed text-white/72 sm:mt-6 sm:text-[1.05rem] lg:text-[1.1rem]">
+              Você traz a ideia e as artes. Eu cuido do orçamento, da especificação de materiais e
+              de todo o processo de produção — em papel, acrílico, madeira, metais e muito mais.
+            </p>
+
+            <div className="mt-8 flex flex-col gap-4 sm:mt-9 sm:flex-row sm:flex-wrap sm:items-center sm:gap-5">
+              <a
+                href={whatsappUrl()}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="btn-pill w-full sm:w-auto"
+              >
+                Solicitar orçamento
+                <ArrowRight className="h-4 w-4" />
+              </a>
+              <a
+                href="#portfolio"
+                className="group inline-flex min-h-12 w-full items-center justify-center gap-2 border-b border-white/35 pb-1 text-sm font-semibold text-white/88 transition-colors hover:border-white hover:text-white sm:w-auto sm:justify-start"
+              >
+                Ver projetos
+                <ArrowRight className="h-4 w-4 transition-transform group-hover:translate-x-0.5" />
+              </a>
+            </div>
           </div>
         </div>
 
-        <div className="rise relative min-w-0 lg:justify-self-end" style={{ animationDelay: '0.1s' }}>
-          <div className="relative w-full max-w-none lg:max-w-[640px] lg:ml-auto">
-            <span
-              aria-hidden="true"
-              className="pointer-events-none absolute -right-8 -top-8 h-40 w-40 rounded-full bg-navy-300/20 blur-3xl"
-            />
-            <HeroGraphic className="relative h-auto w-full" />
-          </div>
-        </div>
+        <HeroDock activeIndex={dockIndex} onPrev={handlePrevDock} onNext={handleNextDock} />
       </div>
     </section>
   );

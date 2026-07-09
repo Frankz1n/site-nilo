@@ -3,10 +3,10 @@ const nextConfig = {
   reactStrictMode: true,
   poweredByHeader: false,
   compress: true,
-  // Otimizações de produção
   productionBrowserSourceMaps: false,
   experimental: {
-    optimizePackageImports: [],
+    // Evita erro do SegmentViewNode no React Client Manifest (dev no Windows)
+    devtoolSegmentExplorer: false,
   },
   async headers() {
     return [

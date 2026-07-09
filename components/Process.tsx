@@ -30,7 +30,7 @@ export default function Process() {
         <div className="section-head">
           <div>
             <p className="eyebrow">Processo</p>
-            <h2 className="display mt-4 max-w-[12ch] text-[clamp(2rem,4vw,3.2rem)]">
+            <h2 className="display mt-3 max-w-[14ch] text-[clamp(1.75rem,6vw,3.2rem)] sm:mt-4">
               Como funciona na prática
             </h2>
           </div>
@@ -40,11 +40,11 @@ export default function Process() {
           </p>
         </div>
 
-        <ol className="grid gap-5 md:grid-cols-2 xl:grid-cols-4">
+        <ol className="grid grid-cols-1 gap-4 sm:grid-cols-2 sm:gap-5 xl:grid-cols-4">
           {steps.map(({ Icon, title, desc }, i) => (
             <li
               key={title}
-              className="relative flex h-full flex-col rounded-[var(--radius-card)] border border-line bg-surface p-7"
+              className="relative flex h-full flex-col rounded-[var(--radius-card)] border border-line bg-surface p-5 sm:p-6 lg:p-7"
             >
               <span className="font-display text-5xl font-extrabold text-navy-800/12">0{i + 1}</span>
               <span className="mt-3 inline-flex text-navy-800">

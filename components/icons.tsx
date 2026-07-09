@@ -10,19 +10,36 @@ const base = {
   strokeLinejoin: 'round' as const,
 };
 
+type LogoMarkProps = IconProps & {
+  tone?: 'brand' | 'light';
+  gradientId?: string;
+};
+
 /* Logotipo — três camadas empilhadas (motivo de camadas de papel/impressão) */
-export function LogoMark({ className, ...props }: IconProps) {
+export function LogoMark({
+  className,
+  tone = 'brand',
+  gradientId = 'lm-a',
+  ...props
+}: LogoMarkProps) {
+  const isLight = tone === 'light';
+
   return (
     <svg viewBox="0 0 48 48" className={className} aria-hidden="true" {...props}>
-      <defs>
-        <linearGradient id="lm-a" x1="0" y1="0" x2="1" y2="1">
-          <stop offset="0" stopColor="#2f63d4" />
-          <stop offset="1" stopColor="#1d3a8c" />
-        </linearGradient>
-      </defs>
-      <path d="M24 4 44 15 24 26 4 15Z" fill="url(#lm-a)" />
-      <path d="M24 18 44 29 24 40 4 29Z" fill="#1d3a8c" />
-      <path d="M24 24 44 35 24 46 4 35Z" fill="#14275f" />
+      {!isLight && (
+        <defs>
+          <linearGradient id={gradientId} x1="0" y1="0" x2="1" y2="1">
+            <stop offset="0" stopColor="#2f63d4" />
+            <stop offset="1" stopColor="#1d3a8c" />
+          </linearGradient>
+        </defs>
+      )}
+      <path
+        d="M24 4 44 15 24 26 4 15Z"
+        fill={isLight ? 'rgba(255,255,255,0.95)' : `url(#${gradientId})`}
+      />
+      <path d="M24 18 44 29 24 40 4 29Z" fill={isLight ? 'rgba(255,255,255,0.78)' : '#1d3a8c'} />
+      <path d="M24 24 44 35 24 46 4 35Z" fill={isLight ? 'rgba(255,255,255,0.58)' : '#14275f'} />
     </svg>
   );
 }
@@ -31,6 +48,14 @@ export function ArrowRight({ className, ...props }: IconProps) {
   return (
     <svg viewBox="0 0 24 24" className={className} aria-hidden="true" {...props}>
       <path {...base} d="M5 12h14M13 6l6 6-6 6" />
+    </svg>
+  );
+}
+
+export function ArrowLeft({ className, ...props }: IconProps) {
+  return (
+    <svg viewBox="0 0 24 24" className={className} aria-hidden="true" {...props}>
+      <path {...base} d="M19 12H5M11 6l-6 6 6 6" />
     </svg>
   );
 }

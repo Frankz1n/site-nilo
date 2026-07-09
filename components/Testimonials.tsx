@@ -28,7 +28,7 @@ export default function Testimonials() {
         <div className="section-head">
           <div>
             <p className="eyebrow">Depoimentos</p>
-            <h2 className="display mt-4 max-w-[12ch] text-[clamp(2rem,4vw,3.2rem)]">
+            <h2 className="display mt-3 max-w-[14ch] text-[clamp(1.75rem,6vw,3.2rem)] sm:mt-4">
               O que dizem sobre o trabalho
             </h2>
           </div>
@@ -38,11 +38,11 @@ export default function Testimonials() {
           </p>
         </div>
 
-        <ul className="grid gap-5 lg:grid-cols-3">
+        <ul className="grid grid-cols-1 gap-4 sm:gap-5 lg:grid-cols-3">
           {testimonials.map((t) => (
             <li
               key={t.name + t.company}
-              className="flex h-full flex-col rounded-[var(--radius-card)] border border-line bg-surface p-8"
+              className="flex h-full flex-col rounded-[var(--radius-card)] border border-line bg-surface p-6 sm:p-7 lg:p-8"
             >
               <QuoteIcon className="h-8 w-8 text-navy-300" />
               <p className="mt-5 flex-1 text-[1.02rem] leading-relaxed text-ink">{t.quote}</p>
