@@ -1,26 +1,16 @@
 import { nav, site } from '@/lib/site';
-import { LogoMark } from './icons';
+import Logo from './Logo';
 
 export default function Footer() {
   const year = new Date().getFullYear();
   return (
     <footer className="border-t border-line bg-paper-2">
-      <div className="container-page grid gap-10 py-14 md:grid-cols-[1.4fr_1fr_1fr]">
+      <div className="container-page grid gap-12 py-16 lg:grid-cols-[1.5fr_1fr_1fr] lg:gap-16 lg:py-20">
         <div className="max-w-sm">
-          <div className="flex items-center gap-3">
-            <LogoMark className="h-9 w-9" />
-            <span className="leading-none">
-              <span className="block font-display text-sm font-extrabold uppercase tracking-[0.06em] text-navy-800">
-                {site.name}
-              </span>
-              <span className="mt-1 block text-[10px] font-semibold uppercase tracking-[0.22em] text-muted">
-                {site.role}
-              </span>
-            </span>
-          </div>
+          <Logo size="md" />
           <p className="mt-5 text-sm leading-relaxed text-body">
-            Consultoria e direção gráfica para marcas que querem se destacar com uma identidade
-            visual forte e consistente.
+            Consultoria gráfica em materiais e produção. Orçamento técnico e gestão completa do
+            processo — em papel, acrílico, madeira, metais e muito mais.
           </p>
         </div>
 

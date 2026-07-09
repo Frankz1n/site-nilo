@@ -31,7 +31,8 @@
   --shadow-btn: 0 8px 20px rgba(29, 58, 140, 0.22);
 
   /* Container */
-  --spacing-gutter: 1.5rem;
+  --spacing-gutter: clamp(1.5rem, 4vw, 3rem);
+  --container-max: 90rem;
 }
 
 /* ============================================================
@@ -70,7 +71,7 @@ body {
 /* Deslocamento das âncoras por causa do header fixo */
 section[id],
 [id].scroll-anchor {
-  scroll-margin-top: 88px;
+  scroll-margin-top: 92px;
 }
 
 /* Foco visível e acessível */
@@ -90,9 +91,33 @@ section[id],
    ============================================================ */
 .container-page {
   width: 100%;
-  max-width: 76rem;
+  max-width: var(--container-max);
   margin-inline: auto;
   padding-inline: var(--spacing-gutter);
+}
+
+.section-block {
+  padding-block: clamp(4rem, 7vw, 6.5rem);
+}
+
+.section-head {
+  display: grid;
+  gap: 1.25rem;
+  margin-bottom: clamp(2.5rem, 5vw, 3.5rem);
+}
+
+@media (min-width: 1024px) {
+  .section-head {
+    grid-template-columns: minmax(0, 1.15fr) minmax(0, 0.85fr);
+    align-items: end;
+    gap: clamp(2rem, 5vw, 4rem);
+  }
+
+  .section-head > :last-child {
+    justify-self: end;
+    text-align: right;
+    max-width: 34rem;
+  }
 }
 
 .eyebrow {

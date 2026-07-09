@@ -1,48 +1,57 @@
 import { ArrowRight } from './icons';
 
-// Substitua por projetos reais e imagens em /public/portfolio (use next/image).
 const projects = [
-  { title: 'Rebranding corporativo', tag: 'Identidade Visual', tone: 'from-navy-800 to-navy-950' },
-  { title: 'Sistema visual de varejo', tag: 'Direção Gráfica', tone: 'from-navy-700 to-navy-900' },
-  { title: 'Linha de embalagens', tag: 'Design de Aplicações', tone: 'from-navy-500 to-navy-800' },
-  { title: 'Posicionamento de marca', tag: 'Consultoria Estratégica', tone: 'from-navy-900 to-navy-950' },
-  { title: 'Manual de marca', tag: 'Identidade Visual', tone: 'from-navy-700 to-navy-950' },
-  { title: 'Campanha institucional', tag: 'Direção Gráfica', tone: 'from-navy-500 to-navy-900' },
+  { title: 'Totens de papel para rede de varejo', tag: 'Papel · Grande volume', tone: 'from-navy-800 to-navy-950', featured: true },
+  { title: 'Displays em acrílico para PDV', tag: 'Acrílico · Varejo', tone: 'from-navy-700 to-navy-900', featured: false },
+  { title: 'Sinalização em madeira', tag: 'Madeira · Institucional', tone: 'from-navy-500 to-navy-800', featured: false },
+  { title: 'Peças em metal para fachada', tag: 'Metal · Comunicação visual', tone: 'from-navy-900 to-navy-950', featured: false },
+  { title: 'Material de ponto de venda', tag: 'Papel · Campanha', tone: 'from-navy-700 to-navy-950', featured: false },
+  { title: 'Kit de peças para franquias', tag: 'Multi-material · Rede', tone: 'from-navy-500 to-navy-900', featured: true },
 ];
 
 export default function Portfolio() {
   return (
-    <section id="portfolio" className="py-16 lg:py-24">
+    <section id="portfolio" className="section-block">
       <div className="container-page">
-        <div className="flex flex-wrap items-end justify-between gap-4">
-          <div className="max-w-lg">
-            <p className="eyebrow">Portfólio</p>
-            <h2 className="display mt-4 text-[clamp(1.9rem,3.6vw,2.7rem)]">
-              Projetos que construíram marcas de verdade
+        <div className="section-head">
+          <div>
+            <p className="eyebrow">Projetos</p>
+            <h2 className="display mt-4 max-w-[14ch] text-[clamp(2rem,4vw,3.2rem)]">
+              Projetos em diferentes materiais e escalas
             </h2>
           </div>
-          <p className="text-sm text-muted">Uma seleção do trabalho desenvolvido.</p>
+          <p className="text-base leading-relaxed text-body">
+            Produções gráficas conduzidas do orçamento à entrega — em papel, acrílico, madeira,
+            metais e combinações para redes e campanhas.
+          </p>
         </div>
 
-        <ul className="mt-10 grid gap-5 sm:grid-cols-2 lg:grid-cols-3">
+        <ul className="grid gap-5 sm:grid-cols-2 lg:grid-cols-12">
           {projects.map((p) => (
-            <li key={p.title} className="group cursor-pointer">
+            <li
+              key={p.title}
+              className={`group cursor-pointer ${p.featured ? 'sm:col-span-2 lg:col-span-6' : 'lg:col-span-3'}`}
+            >
               <div
-                className={`relative flex aspect-[4/3] items-end overflow-hidden rounded-[var(--radius-card)] bg-gradient-to-br ${p.tone} p-5`}
+                className={`relative flex overflow-hidden rounded-[var(--radius-card)] bg-gradient-to-br ${p.tone} p-6 ${
+                  p.featured ? 'aspect-[16/9] sm:aspect-[2/1]' : 'aspect-[4/3]'
+                } items-end`}
               >
                 <span
                   aria-hidden="true"
-                  className="pointer-events-none absolute -right-6 -top-6 h-28 w-28 rotate-45 rounded-lg bg-white/10 transition-transform duration-500 group-hover:scale-125"
+                  className="pointer-events-none absolute -right-6 -top-6 h-32 w-32 rotate-45 rounded-lg bg-white/10 transition-transform duration-500 group-hover:scale-125"
                 />
-                <span className="relative z-10 inline-flex items-center gap-2 text-sm font-semibold text-white opacity-0 transition-opacity group-hover:opacity-100">
-                  Ver projeto <ArrowRight className="h-4 w-4" />
-                </span>
-              </div>
-              <div className="mt-3">
-                <span className="text-xs font-semibold uppercase tracking-wider text-navy-800">
-                  {p.tag}
-                </span>
-                <h3 className="mt-1 font-display text-base font-bold text-ink">{p.title}</h3>
+                <div className="relative z-10 w-full">
+                  <span className="text-xs font-semibold uppercase tracking-wider text-white/80">
+                    {p.tag}
+                  </span>
+                  <h3 className="mt-2 max-w-md font-display text-lg font-bold text-white lg:text-xl">
+                    {p.title}
+                  </h3>
+                  <span className="mt-4 inline-flex items-center gap-2 text-sm font-semibold text-white opacity-0 transition-opacity group-hover:opacity-100">
+                    Ver projeto <ArrowRight className="h-4 w-4" />
+                  </span>
+                </div>
               </div>
             </li>
           ))}

@@ -27,7 +27,7 @@ const montserrat = localFont({
 export const metadata: Metadata = {
   metadataBase: new URL(site.url),
   title: {
-    default: `${site.name} | ${site.role} e Direção Gráfica`,
+    default: `${site.name} | ${site.role} e Produção Gráfica`,
     template: `%s | ${site.name}`,
   },
   description: site.description,
@@ -45,7 +45,7 @@ export const metadata: Metadata = {
     locale: site.locale,
     url: site.url,
     siteName: site.name,
-    title: `${site.name} | ${site.role} e Direção Gráfica`,
+    title: `${site.name} | ${site.role} e Produção Gráfica`,
     description: site.description,
     images: [
       {
@@ -101,7 +101,8 @@ const jsonLd = {
   alternateName: `${site.shortName} — ${site.role}`,
   description: site.description,
   url: site.url,
-  image: `${site.url}${site.ogImage}`,
+  image: `${site.url}${site.logo}`,
+  logo: `${site.url}${site.logo}`,
   email: site.email,
   telephone: site.phone,
   priceRange: '$$$',
@@ -115,24 +116,27 @@ const jsonLd = {
   founder: {
     '@type': 'Person',
     name: site.name,
-    jobTitle: 'Consultor e Diretor Gráfico',
+    jobTitle: 'Consultor Gráfico',
   },
   knowsAbout: [
-    'Identidade Visual',
-    'Direção Gráfica',
-    'Branding',
-    'Design Estratégico',
-    'Consultoria de Marca',
+    'Produção Gráfica',
+    'Orçamento Gráfico',
+    'Materiais Gráficos',
+    'Papel',
+    'Acrílico',
+    'Madeira',
+    'Metais',
+    'Gestão de Produção',
   ],
   sameAs: [site.social.instagram, site.social.linkedin, site.social.behance],
   hasOfferCatalog: {
     '@type': 'OfferCatalog',
     name: 'Serviços de Consultoria Gráfica',
     itemListElement: [
-      { '@type': 'Offer', itemOffered: { '@type': 'Service', name: 'Identidade Visual' } },
-      { '@type': 'Offer', itemOffered: { '@type': 'Service', name: 'Direção Gráfica' } },
-      { '@type': 'Offer', itemOffered: { '@type': 'Service', name: 'Design de Aplicações' } },
-      { '@type': 'Offer', itemOffered: { '@type': 'Service', name: 'Consultoria Estratégica' } },
+      { '@type': 'Offer', itemOffered: { '@type': 'Service', name: 'Orçamento Técnico' } },
+      { '@type': 'Offer', itemOffered: { '@type': 'Service', name: 'Consultoria de Materiais' } },
+      { '@type': 'Offer', itemOffered: { '@type': 'Service', name: 'Gestão de Produção' } },
+      { '@type': 'Offer', itemOffered: { '@type': 'Service', name: 'Acompanhamento de Projeto' } },
     ],
   },
 };

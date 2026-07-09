@@ -2,7 +2,8 @@
 
 import { useEffect, useState } from 'react';
 import { nav, site, whatsappUrl } from '@/lib/site';
-import { ArrowRight, LogoMark, MenuIcon, CloseIcon } from './icons';
+import { ArrowRight, MenuIcon, CloseIcon } from './icons';
+import Logo from './Logo';
 
 export default function Header() {
   const [open, setOpen] = useState(false);
@@ -28,22 +29,18 @@ export default function Header() {
         scrolled ? 'bg-paper-2/85 backdrop-blur-md border-b border-line' : 'bg-transparent'
       }`}
     >
-      <div className="container-page flex h-[76px] items-center justify-between gap-6">
+      <div className="container-page flex h-[84px] items-center justify-between gap-6">
         {/* Marca */}
-        <a href="#inicio" className="flex items-center gap-3" aria-label={`${site.name} — início`}>
-          <LogoMark className="h-9 w-9 shrink-0" />
-          <span className="leading-none">
-            <span className="block font-display text-[15px] font-extrabold uppercase tracking-[0.06em] text-navy-800 sm:text-base">
-              {site.name}
-            </span>
-            <span className="mt-1 block text-[10px] font-semibold uppercase tracking-[0.22em] text-muted">
-              {site.role}
-            </span>
-          </span>
+        <a
+          href="#inicio"
+          className="group block shrink-0 transition-transform duration-300 hover:scale-[1.02]"
+          aria-label={`${site.name} — início`}
+        >
+          <Logo size="md" priority />
         </a>
 
         {/* Nav desktop */}
-        <nav className="hidden items-center gap-7 lg:flex" aria-label="Navegação principal">
+        <nav className="hidden items-center gap-8 xl:gap-10 lg:flex" aria-label="Navegação principal">
           {nav.map((item, i) => (
             <a
               key={item.href}
@@ -67,7 +64,7 @@ export default function Header() {
           rel="noopener noreferrer"
           className="hidden items-center gap-2 rounded-lg bg-navy-800 px-5 py-3 text-sm font-semibold text-white shadow-[var(--shadow-btn)] transition-transform hover:-translate-y-0.5 lg:inline-flex"
         >
-          Fale com um especialista
+          Solicitar orçamento
           <ArrowRight className="h-4 w-4" />
         </a>
 
@@ -106,7 +103,7 @@ export default function Header() {
             rel="noopener noreferrer"
             className="mt-2 inline-flex items-center justify-center gap-2 rounded-lg bg-navy-800 px-5 py-3.5 text-sm font-semibold text-white"
           >
-            Fale com um especialista
+            Solicitar orçamento
             <ArrowRight className="h-4 w-4" />
           </a>
         </nav>

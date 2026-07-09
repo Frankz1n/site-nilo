@@ -1,54 +1,57 @@
 import { CompassIcon, GridIcon, GemIcon, RocketIcon } from './icons';
 
-// Numeração é apropriada aqui: o processo é uma sequência real.
 const steps = [
   {
     Icon: CompassIcon,
-    title: 'Imersão e diagnóstico',
-    desc: 'Entendo o negócio, o público e os objetivos antes de qualquer traço.',
+    title: 'Briefing do cliente',
+    desc: 'Você apresenta a necessidade: peça, quantidade, tamanhos, cores e referências. As artes são fornecidas por você.',
   },
   {
     Icon: GridIcon,
-    title: 'Estratégia visual',
-    desc: 'Defino o território de marca, referências e a direção criativa.',
+    title: 'Especificação e orçamento',
+    desc: 'Defino os materiais, acabamentos e processos ideais e preparo o orçamento detalhado do projeto.',
   },
   {
     Icon: GemIcon,
-    title: 'Criação e refinamento',
-    desc: 'Desenvolvo a identidade e as aplicações, com rodadas de ajuste.',
+    title: 'Aprovação e produção',
+    desc: 'Com o OK do cliente, aciono a produção e acompanho cada etapa junto aos fornecedores.',
   },
   {
     Icon: RocketIcon,
-    title: 'Entrega e padronização',
-    desc: 'Manual de marca e suporte para uma aplicação consistente.',
+    title: 'Entrega e conferência',
+    desc: 'Material produzido, conferido e entregue conforme especificado — no prazo e na qualidade acordados.',
   },
 ];
 
 export default function Process() {
   return (
-    <section id="processo" className="border-y border-line/70 bg-paper-2 py-16 lg:py-24">
+    <section id="processo" className="section-block border-y border-line/70 bg-paper-2">
       <div className="container-page">
-        <div className="max-w-lg">
-          <p className="eyebrow">Processo</p>
-          <h2 className="display mt-4 text-[clamp(1.9rem,3.6vw,2.7rem)]">
-            Um método claro, do briefing à entrega
-          </h2>
+        <div className="section-head">
+          <div>
+            <p className="eyebrow">Processo</p>
+            <h2 className="display mt-4 max-w-[12ch] text-[clamp(2rem,4vw,3.2rem)]">
+              Como funciona na prática
+            </h2>
+          </div>
+          <p className="text-base leading-relaxed text-body">
+            Um fluxo direto: você traz a demanda e as artes, eu cuido da especificação, do orçamento
+            e de toda a produção até a entrega final.
+          </p>
         </div>
 
-        <ol className="mt-12 grid gap-6 md:grid-cols-2 lg:grid-cols-4">
+        <ol className="grid gap-5 md:grid-cols-2 xl:grid-cols-4">
           {steps.map(({ Icon, title, desc }, i) => (
             <li
               key={title}
-              className="relative rounded-[var(--radius-card)] border border-line bg-surface p-6"
+              className="relative flex h-full flex-col rounded-[var(--radius-card)] border border-line bg-surface p-7"
             >
-              <span className="font-display text-4xl font-extrabold text-navy-800/15">
-                0{i + 1}
-              </span>
-              <span className="mt-2 inline-flex text-navy-800">
+              <span className="font-display text-5xl font-extrabold text-navy-800/12">0{i + 1}</span>
+              <span className="mt-3 inline-flex text-navy-800">
                 <Icon className="h-7 w-7" />
               </span>
-              <h3 className="mt-4 font-display text-base font-bold text-ink">{title}</h3>
-              <p className="mt-2 text-sm leading-relaxed text-body">{desc}</p>
+              <h3 className="mt-5 font-display text-lg font-bold text-ink">{title}</h3>
+              <p className="mt-3 flex-1 text-sm leading-relaxed text-body">{desc}</p>
             </li>
           ))}
         </ol>

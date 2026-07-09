@@ -9,25 +9,30 @@ export const site = {
   url: 'https://jorgenilo.com.br',
   locale: 'pt_BR',
   description:
-    'Consultoria e direção gráfica com mais de 20 anos de experiência. Design estratégico que constrói identidades visuais fortes, consistentes e memoráveis para marcas que querem se destacar e crescer.',
+    'Consultoria gráfica especializada em materiais e produção. Orçamento técnico, especificação de papel, acrílico, madeira e metais, e gestão completa do processo produtivo — da demanda do cliente à entrega final.',
   keywords: [
     'consultoria gráfica',
-    'direção gráfica',
-    'identidade visual',
-    'design estratégico',
-    'branding',
-    'design de marca',
-    'consultoria de branding',
+    'produção gráfica',
+    'orçamento gráfico',
+    'materiais gráficos',
+    'totens',
+    'displays',
+    'papel',
+    'acrílico',
+    'madeira',
+    'metais',
+    'gestão de produção',
     'Jorge Nilo Pinheiro de Lima',
   ],
-  email: 'contato@jorgenilo.com.br',
-  phone: '+55 11 90000-0000',
+  email: 'nilo@coimpressa.com.br',
+  phone: '+55 51 9 9981-9048',
   // Apenas dígitos, com DDI, para link do WhatsApp
-  whatsapp: '5511900000000',
-  city: 'São Paulo',
-  region: 'SP',
+  whatsapp: '5551999819048',
+  city: 'Porto Alegre',
+  region: 'RS',
   country: 'BR',
   ogImage: '/og.png',
+  logo: '/logo.png',
   social: {
     instagram: 'https://instagram.com/jorgenilo',
     linkedin: 'https://linkedin.com/in/jorgenilo',
@@ -39,11 +44,11 @@ export const nav = [
   { label: 'Início', href: '#inicio' },
   { label: 'Sobre', href: '#sobre' },
   { label: 'Serviços', href: '#servicos' },
-  { label: 'Portfólio', href: '#portfolio' },
+  { label: 'Projetos', href: '#portfolio' },
   { label: 'Processo', href: '#processo' },
   { label: 'Depoimentos', href: '#depoimentos' },
   { label: 'Contato', href: '#contato' },
 ] as const;
 
-export const whatsappUrl = (msg = 'Olá! Vim pelo site e gostaria de falar sobre um projeto.') =>
+export const whatsappUrl = (msg = 'Olá! Vim pelo site e gostaria de solicitar um orçamento.') =>
   `https://wa.me/${site.whatsapp}?text=${encodeURIComponent(msg)}`;
