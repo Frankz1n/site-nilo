@@ -126,7 +126,6 @@ const jsonLd = {
     'Papel',
     'Acrílico',
     'Madeira',
-    'Metais',
     'Gestão de Produção',
   ],
   sameAs: [site.social.instagram, site.social.linkedin, site.social.behance],

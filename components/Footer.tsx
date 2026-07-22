@@ -10,7 +10,7 @@ export default function Footer() {
           <Logo size="sm" />
           <p className="mt-4 text-sm leading-relaxed text-body sm:mt-5">
             Consultoria gráfica em materiais e produção. Orçamento técnico e gestão completa do
-            processo — em papel, acrílico, madeira, metais e muito mais.
+            processo — em papel, acrílico, madeira e muito mais.
           </p>
         </div>
 

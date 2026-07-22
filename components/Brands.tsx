@@ -3,14 +3,14 @@ import { brands } from '@/lib/brands';
 
 function BrandItem({ name, logo }: { name: string; logo?: string }) {
   return (
-    <li className="flex h-12 w-36 shrink-0 items-center justify-center px-4 sm:h-14 sm:w-44 sm:px-6 md:h-16 md:w-52">
+    <li className="flex h-14 w-40 shrink-0 items-center justify-center px-5 sm:h-16 sm:w-48 sm:px-6 md:h-[4.5rem] md:w-56">
       {logo ? (
         <Image
           src={logo}
           alt={name}
           width={200}
           height={72}
-          className="h-8 w-auto max-w-[8rem] object-contain sm:h-10 sm:max-w-[9.5rem] md:h-11"
+          className="h-8 w-auto max-w-[9rem] object-contain opacity-80 transition-opacity duration-300 hover:opacity-100 sm:h-9 sm:max-w-[10rem] md:h-10"
           unoptimized
         />
       ) : (
@@ -29,7 +29,7 @@ export default function Brands() {
     <section aria-label="Marcas atendidas" className="border-y border-line/70 bg-paper-2 py-8 sm:py-10 lg:py-12">
       <div className="container-page mb-6 sm:mb-8">
         <p className="mx-auto max-w-md text-center text-[0.7rem] font-semibold uppercase leading-relaxed tracking-[0.12em] text-muted sm:text-xs sm:tracking-[0.14em]">
-          Algumas marcas e redes que já atendi na produção
+          Marcas e redes atendidas na produção gráfica
         </p>
       </div>
 

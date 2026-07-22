@@ -19,7 +19,10 @@ export default function Header() {
 
   useEffect(() => {
     const hero = document.querySelector('[data-hero]');
-    if (!hero) return;
+    if (!hero) {
+      setOverHero(false);
+      return;
+    }
 
     const observer = new IntersectionObserver(
       ([entry]) => setOverHero(entry.isIntersecting && entry.intersectionRatio > 0.35),
@@ -59,7 +62,7 @@ export default function Header() {
     >
       <div className="container-page flex h-[var(--header-height)] items-center justify-between gap-3 sm:gap-4">
         <a
-          href="#inicio"
+          href="/#inicio"
           className="group block min-w-0 shrink transition-transform duration-300 hover:scale-[1.02]"
           aria-label={`${site.name} — início`}
         >

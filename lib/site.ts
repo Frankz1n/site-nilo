@@ -9,7 +9,7 @@ export const site = {
   url: 'https://jorgenilo.com.br',
   locale: 'pt_BR',
   description:
-    'Consultoria gráfica especializada em materiais e produção. Orçamento técnico, especificação de papel, acrílico, madeira e metais, e gestão completa do processo produtivo — da demanda do cliente à entrega final.',
+    'Consultoria gráfica especializada em materiais e produção. Orçamento técnico, especificação de papel, acrílico e madeira, e gestão completa do processo produtivo — da demanda do cliente à entrega final.',
   keywords: [
     'consultoria gráfica',
     'produção gráfica',
@@ -20,7 +20,6 @@ export const site = {
     'papel',
     'acrílico',
     'madeira',
-    'metais',
     'gestão de produção',
     'Jorge Nilo Pinheiro de Lima',
   ],
@@ -41,12 +40,12 @@ export const site = {
 } as const;
 
 export const nav = [
-  { label: 'Início', href: '#inicio' },
-  { label: 'Serviços', href: '#servicos' },
-  { label: 'Projetos', href: '#portfolio' },
-  { label: 'Processo', href: '#processo' },
-  { label: 'Depoimentos', href: '#depoimentos' },
-  { label: 'Contato', href: '#contato' },
+  { label: 'Início', href: '/#inicio' },
+  { label: 'Serviços', href: '/#servicos' },
+  { label: 'Projetos', href: '/#portfolio' },
+  { label: 'Processo', href: '/#processo' },
+  { label: 'Depoimentos', href: '/#depoimentos' },
+  { label: 'Contato', href: '/#contato' },
 ] as const;
 
 export const whatsappUrl = (msg = 'Olá! Vim pelo site e gostaria de solicitar um orçamento.') =>

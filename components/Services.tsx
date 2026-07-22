@@ -9,7 +9,7 @@ const services = [
   {
     Icon: LayersIcon,
     title: 'Consultoria de materiais',
-    desc: 'Orientação sobre o melhor suporte para cada aplicação: papel, acrílico, madeira, metais e outros materiais.',
+    desc: 'Orientação sobre o melhor suporte para cada aplicação: papel, acrílico, madeira e outros materiais.',
   },
   {
     Icon: PencilIcon,

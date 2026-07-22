@@ -1,9 +1,9 @@
 import { StarIcon, CheckIcon, TrophyIcon, UserIcon } from './icons';
 
 const stats = [
-  { Icon: StarIcon, top: '+20 anos', bottom: 'em produção gráfica' },
+  { Icon: StarIcon, top: '+35 anos', bottom: 'em produção gráfica' },
   { Icon: CheckIcon, top: '+200 projetos', bottom: 'produzidos e entregues' },
-  { Icon: TrophyIcon, top: 'Multi-materiais', bottom: 'papel, acrílico, madeira e metais' },
+  { Icon: TrophyIcon, top: 'Multi-materiais', bottom: 'papel, acrílico e madeira' },
   { Icon: UserIcon, top: 'Gestão completa', bottom: 'do orçamento à entrega' },
 ];
 

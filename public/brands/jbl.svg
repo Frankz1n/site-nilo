@@ -1,14 +1,4 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 160 72" role="img" aria-label="JBL">
-  <text
-    x="80"
-    y="50"
-    text-anchor="middle"
-    fill="#FF6600"
-    font-family="Arial, Helvetica, sans-serif"
-    font-size="44"
-    font-weight="800"
-    letter-spacing="-1"
-  >
-    JBL
-  </text>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 120 48" role="img" aria-label="JBL">
+  <rect width="120" height="48" rx="6" fill="#FF6600"/>
+  <text x="60" y="33" text-anchor="middle" fill="#fff" font-family="Arial Black, Arial, Helvetica, sans-serif" font-size="26" font-weight="900" letter-spacing="1">JBL</text>
 </svg>

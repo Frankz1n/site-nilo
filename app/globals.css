@@ -270,7 +270,7 @@ section[id],
 }
 
 .brands-marquee {
-  animation: brands-marquee 38s linear infinite;
+  animation: brands-marquee 55s linear infinite;
 }
 
 @media (prefers-reduced-motion: reduce) {
@@ -285,8 +285,8 @@ section[id],
     gap: 1.5rem 2rem;
   }
 
-  /* Oculta a cópia duplicada usada no loop infinito */
-  .brands-marquee > :nth-child(n + 9) {
+  /* Oculta a cópia duplicada usada no loop infinito (15 marcas) */
+  .brands-marquee > :nth-child(n + 16) {
     display: none;
   }
 }

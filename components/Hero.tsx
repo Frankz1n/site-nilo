@@ -44,7 +44,7 @@ export default function Hero() {
 
             <p className="mt-5 max-w-xl text-[1rem] leading-relaxed text-white/72 sm:mt-6 sm:text-[1.05rem] lg:text-[1.1rem]">
               Você traz a ideia e as artes. Eu cuido do orçamento, da especificação de materiais e
-              de todo o processo de produção — em papel, acrílico, madeira, metais e muito mais.
+              de todo o processo de produção — em papel, acrílico, madeira e muito mais.
             </p>
 
             <div className="mt-8 flex flex-col gap-4 sm:mt-9 sm:flex-row sm:flex-wrap sm:items-center sm:gap-5">
