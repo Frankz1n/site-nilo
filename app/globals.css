@@ -172,6 +172,29 @@ section[id],
     linear-gradient(165deg, var(--color-navy-950) 0%, var(--color-navy-900) 42%, var(--color-navy-800) 100%);
 }
 
+.hero-portrait {
+  isolation: isolate;
+}
+
+.hero-portrait-glow {
+  background:
+    radial-gradient(circle at 50% 40%, rgba(125, 157, 230, 0.3), transparent 62%),
+    radial-gradient(circle at 50% 55%, rgba(29, 58, 140, 0.24), transparent 72%);
+  filter: blur(36px);
+}
+
+.hero-portrait-img {
+  /* Só fade inferior para fundir com o dock — sem reduzir o sujeito */
+  -webkit-mask-image: linear-gradient(to bottom, #000 82%, transparent 100%);
+  mask-image: linear-gradient(to bottom, #000 82%, transparent 100%);
+  filter: drop-shadow(0 24px 40px rgba(8, 18, 48, 0.4));
+  animation: rise 0.9s cubic-bezier(0.16, 1, 0.3, 1) 0.12s both;
+}
+
+.hero-portrait-meta {
+  animation: rise 0.8s cubic-bezier(0.16, 1, 0.3, 1) 0.28s both;
+}
+
 .glass-panel {
   background: rgba(255, 255, 255, 0.07);
   border: 1px solid rgba(255, 255, 255, 0.14);
@@ -285,8 +308,8 @@ section[id],
     gap: 1.5rem 2rem;
   }
 
-  /* Oculta a cópia duplicada usada no loop infinito (15 marcas) */
-  .brands-marquee > :nth-child(n + 16) {
+  /* Oculta a cópia duplicada usada no loop infinito (14 marcas) */
+  .brands-marquee > :nth-child(n + 15) {
     display: none;
   }
 }

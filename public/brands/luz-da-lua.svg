@@ -1,0 +1,5 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 220 48" role="img" aria-label="Luz da Lua">
+  <text x="110" y="22" text-anchor="middle" fill="#1a1a1a" font-family="Georgia, 'Times New Roman', serif" font-size="15" font-weight="600" letter-spacing="4">LUZ DA LUA</text>
+  <line x1="48" y1="30" x2="172" y2="30" stroke="#1a1a1a" stroke-width="0.8" opacity="0.35"/>
+  <circle cx="110" cy="38" r="3.5" fill="none" stroke="#1a1a1a" stroke-width="1.2"/>
+</svg>

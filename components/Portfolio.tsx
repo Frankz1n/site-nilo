@@ -1,228 +1,271 @@
 'use client';
 
-import { useCallback, useEffect, useRef, useState } from 'react';
+import { useMemo, useState } from 'react';
 import Image from 'next/image';
-import Link from 'next/link';
-import { brandGroups, getProjectCountLabel } from '@/lib/portfolio';
-import { ArrowLeft, ArrowRight } from './icons';
-
-const AUTO_MS = 4200;
+import {
+  getAllProjects,
+  PROJECT_CATEGORIES,
+  brandGroups,
+  type FullProjectItem,
+  type ProjectCategory,
+} from '@/lib/portfolio';
+import { SearchIcon, CloseIcon, ArrowRight } from './icons';
+import ProjectModal from './portfolio/ProjectModal';
 
 export default function Portfolio() {
-  const [activeIndex, setActiveIndex] = useState(0);
-  const [isPaused, setIsPaused] = useState(false);
-  const scrollerRef = useRef<HTMLUListElement>(null);
-  const activeIndexRef = useRef(0);
+  const [selectedCategory, setSelectedCategory] = useState<ProjectCategory>('Todos');
+  const [selectedBrand, setSelectedBrand] = useState<string>('Todas');
+  const [searchQuery, setSearchQuery] = useState<string>('');
+  const [selectedProject, setSelectedProject] = useState<FullProjectItem | null>(null);
 
-  useEffect(() => {
-    activeIndexRef.current = activeIndex;
-  }, [activeIndex]);
+  const allProjects = useMemo(() => getAllProjects(), []);
 
-  const syncActiveIndex = useCallback(() => {
-    const scroller = scrollerRef.current;
-    if (!scroller) return;
-
-    const cards = Array.from(scroller.children) as HTMLElement[];
-    if (cards.length === 0) return;
-
-    const center = scroller.scrollLeft + scroller.clientWidth / 2;
-    let closest = 0;
-    let minDistance = Number.POSITIVE_INFINITY;
-
-    cards.forEach((card, index) => {
-      const cardCenter = card.offsetLeft + card.offsetWidth / 2;
-      const distance = Math.abs(center - cardCenter);
-      if (distance < minDistance) {
-        minDistance = distance;
-        closest = index;
+  // Contadores por categoria
+  const categoryCounts = useMemo(() => {
+    const counts: Record<string, number> = {
+      Todos: allProjects.length,
+    };
+    PROJECT_CATEGORIES.forEach((cat) => {
+      if (cat !== 'Todos') {
+        counts[cat] = allProjects.filter((p) => p.category === cat).length;
       }
     });
+    return counts;
+  }, [allProjects]);
 
-    setActiveIndex(closest);
-  }, []);
+  // Projetos filtrados
+  const filteredProjects = useMemo(() => {
+    return allProjects.filter((project) => {
+      // Filtro de categoria
+      if (selectedCategory !== 'Todos' && project.category !== selectedCategory) {
+        return false;
+      }
 
-  const scrollToIndex = useCallback((index: number) => {
-    const scroller = scrollerRef.current;
-    const card = scroller?.children[index] as HTMLElement | undefined;
-    if (!scroller || !card) return;
+      // Filtro de marca
+      if (selectedBrand !== 'Todas' && project.brandSlug !== selectedBrand) {
+        return false;
+      }
 
-    scroller.scrollTo({
-      left: card.offsetLeft - (scroller.clientWidth - card.offsetWidth) / 2,
-      behavior: 'smooth',
+      // Filtro de busca
+      if (searchQuery.trim() !== '') {
+        const query = searchQuery.toLowerCase().trim();
+        const matchTitle = project.title.toLowerCase().includes(query);
+        const matchDesc = project.description.toLowerCase().includes(query);
+        const matchTag = project.tag.toLowerCase().includes(query);
+        const matchBrand = project.brandName.toLowerCase().includes(query);
+        if (!matchTitle && !matchDesc && !matchTag && !matchBrand) {
+          return false;
+        }
+      }
+
+      return true;
     });
-  }, []);
+  }, [allProjects, selectedCategory, selectedBrand, searchQuery]);
 
-  useEffect(() => {
-    const scroller = scrollerRef.current;
-    if (!scroller) return;
+  const hasActiveFilters =
+    selectedCategory !== 'Todos' || selectedBrand !== 'Todas' || searchQuery.trim() !== '';
 
-    syncActiveIndex();
-    scroller.addEventListener('scroll', syncActiveIndex, { passive: true });
-    window.addEventListener('resize', syncActiveIndex);
-    return () => {
-      scroller.removeEventListener('scroll', syncActiveIndex);
-      window.removeEventListener('resize', syncActiveIndex);
-    };
-  }, [syncActiveIndex]);
-
-  useEffect(() => {
-    if (isPaused || brandGroups.length < 2) return;
-
-    const prefersReduced =
-      typeof window !== 'undefined' &&
-      window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-    if (prefersReduced) return;
-
-    const timer = window.setInterval(() => {
-      const next = (activeIndexRef.current + 1) % brandGroups.length;
-      scrollToIndex(next);
-    }, AUTO_MS);
-
-    return () => window.clearInterval(timer);
-  }, [isPaused, scrollToIndex]);
-
-  const goPrev = () => {
-    const next = (activeIndex - 1 + brandGroups.length) % brandGroups.length;
-    scrollToIndex(next);
-  };
-
-  const goNext = () => {
-    const next = (activeIndex + 1) % brandGroups.length;
-    scrollToIndex(next);
+  const resetFilters = () => {
+    setSelectedCategory('Todos');
+    setSelectedBrand('Todas');
+    setSearchQuery('');
   };
 
   return (
-    <section id="portfolio" className="section-block overflow-hidden">
+    <section id="portfolio" className="section-block bg-paper py-16 sm:py-20 lg:py-24">
       <div className="container-page">
-        <div className="section-head">
+        {/* Cabeçalho da Seção */}
+        <div className="section-head max-w-3xl">
           <div>
-            <p className="eyebrow">Clientes & projetos</p>
-            <h2 className="display mt-3 max-w-[18ch] text-[clamp(1.75rem,6vw,3.2rem)] sm:mt-4">
-              Marcas que confiam na produção
+            <p className="eyebrow">Galeria de Produção</p>
+            <h2 className="display mt-3 text-[clamp(1.85rem,6vw,3.2rem)] font-extrabold leading-tight tracking-tight sm:mt-4">
+              Todos os projetos & cases gráficos
             </h2>
           </div>
           <p className="text-sm leading-relaxed text-body sm:text-base">
-            Cada capa abre o portfólio da marca — clique para ver todos os projetos e os detalhes de
-            cada peça produzida.
+            Explore a diversidade de materiais e peças desenvolvidas para grandes marcas — desde
+            displays e acrílicos luminosos até totens de grande formato, campanhas de PDV e edições
+            impressas.
           </p>
         </div>
 
-        <div
-          className="relative"
-          onMouseEnter={() => setIsPaused(true)}
-          onMouseLeave={() => setIsPaused(false)}
-          onFocusCapture={() => setIsPaused(true)}
-          onBlurCapture={(event) => {
-            if (!event.currentTarget.contains(event.relatedTarget as Node | null)) {
-              setIsPaused(false);
-            }
-          }}
-        >
-          <div className="mb-5 flex items-center justify-between gap-4 sm:mb-6">
-            <p className="text-sm text-body">
-              <span className="font-semibold text-ink">{activeIndex + 1}</span>
-              <span className="text-muted"> / {brandGroups.length}</span>
-            </p>
-            <div className="flex items-center gap-2">
-              <button
-                type="button"
-                onClick={goPrev}
-                aria-label="Marca anterior"
-                className="inline-flex h-11 w-11 items-center justify-center rounded-full border border-line bg-surface text-navy-800 shadow-sm transition hover:border-navy-300"
-              >
-                <ArrowLeft className="h-5 w-5" />
-              </button>
-              <button
-                type="button"
-                onClick={goNext}
-                aria-label="Próxima marca"
-                className="inline-flex h-11 w-11 items-center justify-center rounded-full border border-line bg-surface text-navy-800 shadow-sm transition hover:border-navy-300"
-              >
-                <ArrowRight className="h-5 w-5" />
-              </button>
+        {/* Barra de Filtros e Busca */}
+        <div className="mt-8 flex flex-col gap-5 sm:mt-10">
+          {/* Categorias (Pills) */}
+          <div className="flex flex-wrap items-center gap-2 border-b border-line/60 pb-5">
+            {PROJECT_CATEGORIES.map((category) => {
+              const isActive = selectedCategory === category;
+              const count = categoryCounts[category] || 0;
+              return (
+                <button
+                  key={category}
+                  type="button"
+                  onClick={() => setSelectedCategory(category)}
+                  className={`inline-flex items-center gap-2 rounded-full px-4 py-2 text-xs font-semibold transition-all sm:text-sm ${
+                    isActive
+                      ? 'bg-navy-800 text-white shadow-md'
+                      : 'border border-line bg-surface text-ink/80 hover:border-navy-300 hover:text-navy-800'
+                  }`}
+                >
+                  <span>{category}</span>
+                  <span
+                    className={`rounded-full px-2 py-0.5 text-[0.68rem] font-bold ${
+                      isActive ? 'bg-white/20 text-white' : 'bg-line/60 text-navy-800/70'
+                    }`}
+                  >
+                    {count}
+                  </span>
+                </button>
+              );
+            })}
+          </div>
+
+          {/* Segunda Linha: Busca + Seletor de Marca */}
+          <div className="flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
+            <div className="relative flex-1 max-w-md">
+              <span className="pointer-events-none absolute inset-y-0 left-0 flex items-center pl-3.5 text-muted">
+                <SearchIcon className="h-4 w-4" />
+              </span>
+              <input
+                type="text"
+                value={searchQuery}
+                onChange={(e) => setSearchQuery(e.target.value)}
+                placeholder="Buscar por projeto, material ou marca..."
+                className="w-full rounded-lg border border-line bg-surface py-2.5 pl-10 pr-9 text-sm text-ink placeholder:text-muted/70 shadow-sm transition focus:border-navy-800 focus:outline-none focus:ring-1 focus:ring-navy-800"
+              />
+              {searchQuery && (
+                <button
+                  type="button"
+                  onClick={() => setSearchQuery('')}
+                  aria-label="Limpar busca"
+                  className="absolute inset-y-0 right-0 flex items-center pr-3 text-muted hover:text-ink"
+                >
+                  <CloseIcon className="h-4 w-4" />
+                </button>
+              )}
+            </div>
+
+            <div className="flex items-center justify-between gap-3 sm:justify-end">
+              <div className="flex items-center gap-2">
+                <label htmlFor="brand-filter" className="text-xs font-semibold text-muted sm:text-sm whitespace-nowrap">
+                  Marca:
+                </label>
+                <select
+                  id="brand-filter"
+                  value={selectedBrand}
+                  onChange={(e) => setSelectedBrand(e.target.value)}
+                  className="rounded-lg border border-line bg-surface py-2 px-3 text-xs font-medium text-ink shadow-sm transition focus:border-navy-800 focus:outline-none sm:text-sm"
+                >
+                  <option value="Todas">Todas as marcas ({brandGroups.length})</option>
+                  {brandGroups.map((brand) => (
+                    <option key={brand.slug} value={brand.slug}>
+                      {brand.name} ({brand.projects.length})
+                    </option>
+                  ))}
+                </select>
+              </div>
+
+              {hasActiveFilters && (
+                <button
+                  type="button"
+                  onClick={resetFilters}
+                  className="text-xs font-semibold text-navy-800 underline underline-offset-2 hover:text-navy-950 sm:text-sm"
+                >
+                  Limpar filtros
+                </button>
+              )}
             </div>
           </div>
 
-          <ul
-            ref={scrollerRef}
-            className="flex gap-4 overflow-x-auto scroll-smooth pb-2 [-ms-overflow-style:none] [scrollbar-width:none] snap-x snap-mandatory sm:gap-6 [&::-webkit-scrollbar]:hidden"
-          >
-            {brandGroups.map((brand) => (
-              <li
-                key={brand.slug}
-                className="w-[min(100%,22rem)] shrink-0 snap-center sm:w-[min(85%,34rem)] lg:w-[min(70%,40rem)]"
-              >
-                <Link
-                  href={`/portfolio/${brand.slug}`}
-                  className="group relative flex min-h-[22rem] overflow-hidden rounded-[var(--radius-card)] bg-navy-950 shadow-[var(--shadow-soft)] transition hover:-translate-y-0.5 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-navy-800 sm:min-h-[26rem] sm:aspect-[16/11] sm:min-h-0 lg:min-h-0"
+          {/* Contador de resultados */}
+          <div className="flex items-center justify-between text-xs font-medium text-muted">
+            <p>
+              Exibindo <span className="font-semibold text-ink">{filteredProjects.length}</span> de{' '}
+              {allProjects.length} projetos
+            </p>
+          </div>
+        </div>
+
+        {/* Grid de Projetos */}
+        {filteredProjects.length > 0 ? (
+          <ul className="mt-8 grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3">
+            {filteredProjects.map((project) => (
+              <li key={project.id}>
+                <button
+                  type="button"
+                  onClick={() => setSelectedProject(project)}
+                  className="group flex h-full w-full flex-col overflow-hidden rounded-[var(--radius-card)] border border-line/70 bg-surface text-left shadow-[var(--shadow-soft)] transition-all duration-300 hover:-translate-y-1.5 hover:shadow-xl focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-navy-800"
                 >
-                  <Image
-                    src={brand.cover}
-                    alt=""
-                    fill
-                    sizes="(max-width: 640px) 90vw, (max-width: 1024px) 70vw, 40rem"
-                    className="object-cover transition-transform duration-700 ease-out group-hover:scale-[1.04]"
-                  />
-
-                  <span
-                    aria-hidden="true"
-                    className="pointer-events-none absolute inset-0 bg-gradient-to-t from-navy-950/92 via-navy-950/35 to-navy-950/10"
-                  />
-
-                  <span
-                    aria-hidden="true"
-                    className="absolute left-4 top-0 z-10 h-3 w-16 rounded-b-md bg-white/90 sm:left-5 sm:w-20"
-                  />
-
-                  <span className="absolute left-4 top-5 z-10 sm:left-5 sm:top-6">
-                    <span className="inline-flex h-9 items-center rounded-md bg-white/95 px-2.5 shadow-sm backdrop-blur-sm sm:h-10 sm:px-3">
-                      <Image
-                        src={brand.logo}
-                        alt=""
-                        width={120}
-                        height={36}
-                        className="h-5 w-auto max-w-[5.5rem] object-contain sm:h-6 sm:max-w-[6.5rem]"
-                        unoptimized
-                      />
-                    </span>
+                  {/* Imagem do Projeto */}
+                  <span className="relative block aspect-[4/3] w-full overflow-hidden bg-navy-950">
+                    <Image
+                      src={project.image}
+                      alt={`${project.brandName} — ${project.title}`}
+                      fill
+                      sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 33vw"
+                      className="object-cover transition-transform duration-700 ease-out group-hover:scale-105"
+                    />
+                    <span
+                      aria-hidden="true"
+                      className="pointer-events-none absolute inset-0 bg-gradient-to-t from-navy-950/40 via-transparent to-transparent"
+                    />
                   </span>
 
-                  <span className="relative z-10 mt-auto flex w-full flex-col p-5 sm:p-6 lg:p-8">
-                    <span className="text-[0.68rem] font-semibold uppercase tracking-wider text-white/70 sm:text-xs">
-                      {getProjectCountLabel(brand.projects.length)}
-                    </span>
-                    <span className="mt-2 font-display text-2xl font-bold text-white sm:text-3xl">
-                      {brand.name}
-                    </span>
-                    <span className="mt-2 line-clamp-2 max-w-md text-sm leading-relaxed text-white/72 sm:text-base">
-                      {brand.summary}
-                    </span>
-                    <span className="mt-5 inline-flex items-center gap-2 text-sm font-semibold text-white">
-                      Abrir pasta
-                      <ArrowRight className="h-4 w-4 transition-transform duration-300 group-hover:translate-x-0.5" />
+                  {/* Conteúdo do Card */}
+                  <span className="flex flex-1 flex-col justify-between p-5 sm:p-6">
+                    <div>
+                      <div className="flex items-center justify-between gap-2">
+                        <span className="text-[0.68rem] font-semibold uppercase tracking-wider text-muted sm:text-xs">
+                          {project.brandName}
+                        </span>
+                        <span className="text-[0.68rem] font-semibold text-navy-800/75 sm:text-xs">
+                          {project.tag}
+                        </span>
+                      </div>
+                      <h3 className="mt-1.5 font-display text-lg font-bold leading-snug text-ink group-hover:text-navy-800 sm:text-xl">
+                        {project.title}
+                      </h3>
+                      <p className="mt-2 line-clamp-2 text-sm leading-relaxed text-body">
+                        {project.description}
+                      </p>
+                    </div>
+
+
+                    <span className="mt-4 inline-flex items-center gap-1.5 text-xs font-semibold text-navy-800 transition group-hover:translate-x-1 sm:text-sm">
+                      Ver detalhes do projeto
+                      <ArrowRight className="h-4 w-4" />
                     </span>
                   </span>
-                </Link>
+                </button>
               </li>
             ))}
           </ul>
-
-          <div className="mt-5 flex justify-center gap-2 sm:mt-6">
-            {brandGroups.map((brand, index) => (
-              <button
-                key={brand.slug}
-                type="button"
-                aria-label={`Ir para ${brand.name}`}
-                aria-current={index === activeIndex}
-                onClick={() => scrollToIndex(index)}
-                className={`h-2 rounded-full transition-all ${
-                  index === activeIndex ? 'w-7 bg-navy-800' : 'w-2 bg-navy-300/70 hover:bg-navy-500'
-                }`}
-              />
-            ))}
+        ) : (
+          /* Estado Vazio */
+          <div className="mt-12 flex flex-col items-center justify-center rounded-2xl border border-dashed border-line bg-paper-2 p-10 text-center">
+            <p className="font-display text-lg font-bold text-ink sm:text-xl">
+              Nenhum projeto encontrado
+            </p>
+            <p className="mt-2 max-w-md text-sm text-body">
+              Não encontramos projetos com os filtros selecionados. Tente buscar por outros termos
+              ou limpar os filtros ativos.
+            </p>
+            <button
+              type="button"
+              onClick={resetFilters}
+              className="mt-5 inline-flex items-center gap-2 rounded-lg bg-navy-800 px-4 py-2.5 text-sm font-semibold text-white shadow-sm transition hover:bg-navy-900"
+            >
+              Limpar todos os filtros
+            </button>
           </div>
-        </div>
+        )}
       </div>
+
+      {/* Modal de Detalhes */}
+      <ProjectModal
+        project={selectedProject}
+        onClose={() => setSelectedProject(null)}
+      />
     </section>
   );
 }

@@ -51,7 +51,13 @@ export default function BrandProjectsGrid({ brand }: BrandProjectsGridProps) {
         ))}
       </ul>
 
-      <ProjectModal project={selected} brandName={brand.name} onClose={() => setSelected(null)} />
+      <ProjectModal
+        project={selected}
+        brandName={brand.name}
+        brandLogo={brand.logo}
+        onClose={() => setSelected(null)}
+      />
+
     </>
   );
 }

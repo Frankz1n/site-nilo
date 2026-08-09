@@ -209,3 +209,21 @@ export function CloseIcon({ className, ...props }: IconProps) {
     </svg>
   );
 }
+
+export function SearchIcon({ className, ...props }: IconProps) {
+  return (
+    <svg viewBox="0 0 24 24" className={className} aria-hidden="true" {...props}>
+      <circle cx="11" cy="11" r="7" {...base} />
+      <path {...base} d="M20 20l-4.35-4.35" />
+    </svg>
+  );
+}
+
+export function FilterIcon({ className, ...props }: IconProps) {
+  return (
+    <svg viewBox="0 0 24 24" className={className} aria-hidden="true" {...props}>
+      <path {...base} d="M4 6h16M7 12h10M10 18h4" />
+    </svg>
+  );
+}
+
