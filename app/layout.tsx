@@ -23,18 +23,20 @@ const montserrat = localFont({
   ],
 });
 
+const defaultTitle = `${site.brandName} | Consultoria e Produção Gráfica`;
+
 export const metadata: Metadata = {
   metadataBase: new URL(site.url),
   title: {
-    default: `${site.name} | ${site.role} e Produção Gráfica`,
-    template: `%s | ${site.name}`,
+    default: defaultTitle,
+    template: `%s | ${site.brandName}`,
   },
   description: site.description,
   keywords: [...site.keywords],
   authors: [{ name: site.name, url: site.url }],
   creator: site.name,
-  publisher: site.name,
-  applicationName: `${site.name} — ${site.role}`,
+  publisher: site.brandName,
+  applicationName: site.brandName,
   category: 'Design',
   alternates: {
     canonical: '/',
@@ -43,21 +45,22 @@ export const metadata: Metadata = {
     type: 'website',
     locale: site.locale,
     url: site.url,
-    siteName: site.name,
-    title: `${site.name} | ${site.role} e Produção Gráfica`,
+    siteName: site.brandName,
+    title: defaultTitle,
     description: site.description,
     images: [
       {
         url: site.ogImage,
         width: 1200,
         height: 630,
-        alt: `${site.name} — ${site.role}`,
+        type: 'image/jpeg',
+        alt: `${site.brandName} — Projetos que Ganham Forma.`,
       },
     ],
   },
   twitter: {
     card: 'summary_large_image',
-    title: `${site.name} | ${site.role}`,
+    title: defaultTitle,
     description: site.description,
     images: [site.ogImage],
   },
@@ -98,7 +101,7 @@ const jsonLd = {
   '@type': 'ProfessionalService',
   '@id': `${site.url}/#business`,
   name: site.name,
-  alternateName: `${site.shortName} — ${site.role}`,
+  alternateName: site.brandName,
   description: site.description,
   url: site.url,
   image: `${site.url}${site.logo}`,

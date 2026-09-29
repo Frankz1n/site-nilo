@@ -31,7 +31,7 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
   if (!brand) return { title: 'Projeto não encontrado' };
 
   return {
-    title: `${brand.name} — Projetos | ${site.shortName}`,
+    title: `${brand.name} — Projetos`,
     description: brand.summary,
     openGraph: {
       title: `${brand.name} — Projetos`,

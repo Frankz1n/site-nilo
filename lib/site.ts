@@ -4,12 +4,12 @@
 export const site = {
   name: 'Jorge Nilo Pinheiro de Lima',
   shortName: 'Jorge Nilo',
+  brandName: 'Nilo Consultor Gráfico',
   role: 'Consultoria Gráfica',
-  // Troque para o domínio de produção
-  url: 'https://jorgenilo.com.br',
+  url: 'https://niloconsultorgrafico.com.br',
   locale: 'pt_BR',
   description:
-    'Consultoria gráfica especializada em materiais e produção. Orçamento técnico, especificação de papel, acrílico e madeira, e gestão completa do processo produtivo — da demanda do cliente à entrega final.',
+    'Consultoria e administração total em produção gráfica para marcas, agências e empresas que procuram qualidade, rapidez e resultados. Mais de 30 anos de experiência.',
   keywords: [
     'consultoria gráfica',
     'produção gráfica',
@@ -30,7 +30,7 @@ export const site = {
   city: 'Porto Alegre',
   region: 'RS',
   country: 'BR',
-  ogImage: '/og.png',
+  ogImage: '/og.jpg',
   logo: '/logo.png',
   social: {
     instagram: 'https://instagram.com/jorgenilo',
