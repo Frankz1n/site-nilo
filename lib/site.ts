@@ -39,14 +39,38 @@ export const site = {
   },
 } as const;
 
-export const nav = [
-  { label: 'Início', href: '/#inicio' },
-  { label: 'Serviços', href: '/#servicos' },
-  { label: 'Projetos', href: '/#portfolio' },
-  { label: 'Processo', href: '/#processo' },
-  { label: 'Depoimentos', href: '/#depoimentos' },
-  { label: 'Contato', href: '/#contato' },
-] as const;
+export const siteFeatures = {
+  // Mantida desligada até existirem depoimentos reais de clientes.
+  isTestimonialsSectionVisible: false,
+} as const;
+
+export type SectionId = 'inicio' | 'sobre' | 'projetos' | 'servicos' | 'depoimentos' | 'contato';
+
+export type NavigationItem = {
+  label: string;
+  sectionId: SectionId;
+  href: `/#${SectionId}`;
+};
+
+const isSectionVisible = (item: NavigationItem): boolean =>
+  item.sectionId !== 'depoimentos' || siteFeatures.isTestimonialsSectionVisible;
+
+const allNavigationItems: readonly NavigationItem[] = [
+  { label: 'Início', sectionId: 'inicio', href: '/#inicio' },
+  { label: 'Sobre', sectionId: 'sobre', href: '/#sobre' },
+  { label: 'Projetos', sectionId: 'projetos', href: '/#projetos' },
+  { label: 'Serviços', sectionId: 'servicos', href: '/#servicos' },
+  { label: 'Depoimentos', sectionId: 'depoimentos', href: '/#depoimentos' },
+  { label: 'Contato', sectionId: 'contato', href: '/#contato' },
+];
+
+export const nav: readonly NavigationItem[] = allNavigationItems.filter(isSectionVisible);
+
+export const footerNav: readonly NavigationItem[] = nav.filter(
+  (item) => item.sectionId !== 'servicos',
+);
+
+export const displayPhone = '(51) 9 9981-9048';
 
 export const whatsappUrl = (msg = 'Olá! Vim pelo site e gostaria de solicitar um orçamento.') =>
   `https://wa.me/${site.whatsapp}?text=${encodeURIComponent(msg)}`;

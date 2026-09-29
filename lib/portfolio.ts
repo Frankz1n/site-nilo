@@ -6,20 +6,6 @@ export type PortfolioItem = {
   image: string;
 };
 
-export type ProjectCategory =
-  | 'Todos'
-  | 'Acrílico & Iluminação'
-  | 'PDV & Expositores'
-  | 'Campanhas & Impressão'
-  | 'Editorial';
-
-export type FullProjectItem = PortfolioItem & {
-  brandName: string;
-  brandSlug: string;
-  brandLogo: string;
-  category: ProjectCategory;
-};
-
 export type BrandGroup = {
   slug: string;
   name: string;
@@ -320,38 +306,6 @@ export const brandGroups: BrandGroup[] = [
     ],
   },
 ];
-
-export function getCategoryForProject(tag: string): ProjectCategory {
-  if (tag.includes('Editorial')) return 'Editorial';
-  if (tag.includes('PDV') || tag.includes('Varejo') || tag.includes('Exposição')) return 'PDV & Expositores';
-  if (tag.includes('Acrílico') || tag.includes('Iluminação') || tag.includes('Marca') || tag.includes('Institucional')) return 'Acrílico & Iluminação';
-  if (tag.includes('Papel') || tag.includes('Campanha') || tag.includes('Lançamento') || tag.includes('Brindes') || tag.includes('Grande formato')) return 'Campanhas & Impressão';
-  return 'PDV & Expositores';
-}
-
-export const PROJECT_CATEGORIES: ProjectCategory[] = [
-  'Todos',
-  'Acrílico & Iluminação',
-  'PDV & Expositores',
-  'Campanhas & Impressão',
-  'Editorial',
-];
-
-export function getAllProjects(): FullProjectItem[] {
-  const all: FullProjectItem[] = [];
-  for (const group of brandGroups) {
-    for (const project of group.projects) {
-      all.push({
-        ...project,
-        brandName: group.name,
-        brandSlug: group.slug,
-        brandLogo: group.logo,
-        category: getCategoryForProject(project.tag),
-      });
-    }
-  }
-  return all;
-}
 
 export function getBrandBySlug(slug: string): BrandGroup | undefined {
   return brandGroups.find((group) => group.slug === slug);

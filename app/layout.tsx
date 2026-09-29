@@ -5,12 +5,10 @@ import './globals.css';
 
 // Fontes self-hospedadas (woff2) — zero requisição externa, zero layout shift.
 const inter = localFont({
-  variable: '--font-inter',
+  variable: '--font-inter-family',
   display: 'swap',
   src: [
     { path: './fonts/inter-400.woff2', weight: '400', style: 'normal' },
-    { path: './fonts/inter-500.woff2', weight: '500', style: 'normal' },
-    { path: './fonts/inter-600.woff2', weight: '600', style: 'normal' },
     { path: './fonts/inter-700.woff2', weight: '700', style: 'normal' },
   ],
 });
@@ -19,8 +17,9 @@ const montserrat = localFont({
   variable: '--font-montserrat',
   display: 'swap',
   src: [
+    { path: './fonts/montserrat-500.woff2', weight: '500', style: 'normal' },
+    { path: './fonts/montserrat-600.woff2', weight: '600', style: 'normal' },
     { path: './fonts/montserrat-700.woff2', weight: '700', style: 'normal' },
-    { path: './fonts/montserrat-800.woff2', weight: '800', style: 'normal' },
   ],
 });
 
@@ -86,7 +85,7 @@ export const metadata: Metadata = {
 };
 
 export const viewport: Viewport = {
-  themeColor: '#1d3a8c',
+  themeColor: '#012f67',
   width: 'device-width',
   initialScale: 1,
   viewportFit: 'cover',
@@ -147,7 +146,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
       <body>
         <a
           href="#inicio"
-          className="sr-only focus:not-sr-only focus:absolute focus:left-4 focus:top-4 focus:z-[100] focus:rounded-lg focus:bg-navy-800 focus:px-4 focus:py-2 focus:text-sm focus:font-semibold focus:text-white"
+          className="sr-only focus:not-sr-only focus:absolute focus:left-4 focus:top-4 focus:z-[100] focus:rounded-lg focus:bg-primary focus:px-4 focus:py-2 focus:text-sm focus:font-semibold focus:text-white"
         >
           Pular para o conteúdo
         </a>

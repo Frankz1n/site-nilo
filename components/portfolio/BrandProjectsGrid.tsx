@@ -1,6 +1,6 @@
 'use client';
 
-import { useState } from 'react';
+import { useCallback, useState } from 'react';
 import Image from 'next/image';
 import type { BrandGroup, PortfolioItem } from '@/lib/portfolio';
 import ProjectModal from './ProjectModal';
@@ -10,41 +10,32 @@ type BrandProjectsGridProps = {
 };
 
 export default function BrandProjectsGrid({ brand }: BrandProjectsGridProps) {
-  const [selected, setSelected] = useState<PortfolioItem | null>(null);
+  const [selectedProject, setSelectedProject] = useState<PortfolioItem | null>(null);
+  const closeModal = useCallback(() => setSelectedProject(null), []);
 
   return (
     <>
-      <ul className="grid grid-cols-1 gap-4 sm:grid-cols-2 sm:gap-5 lg:grid-cols-3">
+      <ul className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3 lg:gap-8">
         {brand.projects.map((project) => (
           <li key={project.id}>
             <button
               type="button"
-              onClick={() => setSelected(project)}
-              className="group block w-full overflow-hidden rounded-[var(--radius-card)] bg-navy-950 text-left shadow-[var(--shadow-soft)] transition hover:-translate-y-0.5 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-navy-800"
+              onClick={() => setSelectedProject(project)}
+              className="group flex h-full w-full flex-col rounded-[20px] border border-mist/26 bg-surface text-left transition hover:-translate-y-1 hover:shadow-[0_18px_40px_rgba(0,23,58,0.08)]"
             >
-              <span className="relative block aspect-[4/3] overflow-hidden">
+              <span className="relative mx-2 mt-2 block aspect-[4/3] overflow-hidden rounded-t-[16px]">
                 <Image
                   src={project.image}
                   alt=""
                   fill
-                  sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 33vw"
-                  className="object-cover transition-transform duration-700 ease-out group-hover:scale-[1.04]"
-                />
-                <span
-                  aria-hidden="true"
-                  className="pointer-events-none absolute inset-0 bg-gradient-to-t from-navy-950/80 via-navy-950/10 to-transparent"
+                  sizes="(min-width: 1024px) 30vw, (min-width: 640px) 50vw, 100vw"
+                  className="object-cover transition-transform duration-700 ease-out group-hover:scale-[1.03]"
                 />
               </span>
-              <span className="block bg-surface px-4 py-4 sm:px-5 sm:py-5">
-                <span className="block text-[0.68rem] font-semibold uppercase tracking-wider text-muted sm:text-xs">
-                  {project.tag}
-                </span>
-                <span className="mt-1.5 block font-display text-base font-bold leading-snug text-ink sm:text-lg">
-                  {project.title}
-                </span>
-                <span className="mt-2 block text-sm text-navy-800/80 transition group-hover:text-navy-800">
-                  Ver detalhes
-                </span>
+              <span className="flex flex-1 flex-col px-5 pt-4 pb-5">
+                <span className="text-caption font-semibold tracking-[0.08em] uppercase text-muted">{project.tag}</span>
+                <span className="mt-1.5 text-heading font-semibold text-ink">{project.title}</span>
+                <span className="mt-3 text-body font-semibold text-primary">Ver detalhes</span>
               </span>
             </button>
           </li>
@@ -52,12 +43,11 @@ export default function BrandProjectsGrid({ brand }: BrandProjectsGridProps) {
       </ul>
 
       <ProjectModal
-        project={selected}
+        project={selectedProject}
         brandName={brand.name}
         brandLogo={brand.logo}
-        onClose={() => setSelected(null)}
+        onClose={closeModal}
       />
-
     </>
   );
 }

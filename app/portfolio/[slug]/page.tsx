@@ -2,10 +2,11 @@ import type { Metadata } from 'next';
 import Image from 'next/image';
 import Link from 'next/link';
 import { notFound } from 'next/navigation';
-import Header from '@/components/Header';
-import Footer from '@/components/Footer';
+import SiteFooter from '@/components/layout/SiteFooter';
+import SiteHeader from '@/components/layout/SiteHeader';
 import BrandProjectsGrid from '@/components/portfolio/BrandProjectsGrid';
-import { ArrowLeft } from '@/components/icons';
+import SectionHeading from '@/components/ui/SectionHeading';
+import { ArrowLeftIcon } from '@/components/ui/icons';
 import {
   brandGroups,
   getAllBrandSlugs,
@@ -13,6 +14,8 @@ import {
   getProjectCountLabel,
 } from '@/lib/portfolio';
 import { site } from '@/lib/site';
+
+const MAX_RELATED_BRANDS = 4;
 
 type PageProps = {
   params: Promise<{ slug: string }>;
@@ -43,90 +46,84 @@ export default async function BrandPortfolioPage({ params }: PageProps) {
   const brand = getBrandBySlug(slug);
   if (!brand) notFound();
 
-  const otherBrands = brandGroups.filter((item) => item.slug !== brand.slug).slice(0, 4);
+  const relatedBrands = brandGroups
+    .filter((item) => item.slug !== brand.slug)
+    .slice(0, MAX_RELATED_BRANDS);
 
   return (
     <>
-      <Header />
+      <SiteHeader initialSectionId="projetos" />
       <main>
-        <section className="relative overflow-hidden bg-navy-950 pt-[var(--header-height)]">
-          <div className="absolute inset-0">
-            <Image
-              src={brand.cover}
-              alt=""
-              fill
-              priority
-              sizes="100vw"
-              className="object-cover opacity-45"
-            />
-            <div
-              aria-hidden="true"
-              className="absolute inset-0 bg-gradient-to-b from-navy-950/70 via-navy-950/75 to-paper"
-            />
-          </div>
+        <section aria-labelledby="brand-title" className="relative isolate overflow-hidden bg-ink-deep text-white">
+          <Image
+            src={brand.cover}
+            alt=""
+            fill
+            priority
+            sizes="100vw"
+            className="-z-10 object-cover opacity-35"
+          />
+          <div aria-hidden="true" className="absolute inset-0 -z-10 bg-linear-to-b from-ink-deep/60 via-ink-deep/80 to-ink-deep" />
 
-          <div className="container-page relative z-10 pb-16 pt-10 sm:pb-20 sm:pt-14">
+          <div className="container-page py-section">
             <Link
-              href="/#portfolio"
-              className="inline-flex items-center gap-2 text-sm font-semibold text-white/80 transition hover:text-white"
+              href="/#projetos"
+              className="inline-flex items-center gap-2 text-body font-semibold text-white/75 transition hover:text-white"
             >
-              <ArrowLeft className="h-4 w-4" />
-              Voltar aos clientes
+              <ArrowLeftIcon className="size-5" />
+              Voltar aos projetos
             </Link>
 
-            <div className="mt-8 flex flex-col gap-6 sm:mt-10 sm:flex-row sm:items-end sm:justify-between">
-              <div className="max-w-2xl">
-                <span className="inline-flex h-11 items-center rounded-lg bg-white px-3 shadow-sm sm:h-12 sm:px-4">
+            <div className="mt-8 flex flex-col gap-6 lg:mt-10 lg:flex-row lg:items-end lg:justify-between">
+              <div className="max-w-3xl">
+                <span className="inline-flex h-11 items-center rounded-xl bg-white px-4">
                   <Image
                     src={brand.logo}
                     alt={brand.name}
                     width={160}
                     height={48}
-                    className="h-6 w-auto max-w-[8rem] object-contain sm:h-7 sm:max-w-[9rem]"
+                    className="h-6 w-auto max-w-32 object-contain"
                     unoptimized
                   />
                 </span>
-                <h1 className="mt-5 font-display text-[clamp(2rem,6vw,3.4rem)] font-extrabold leading-none tracking-tight text-white">
+                <h1 id="brand-title" className="mt-5 text-display font-semibold">
                   {brand.name}
                 </h1>
-                <p className="mt-4 max-w-xl text-sm leading-relaxed text-white/75 sm:text-base">
-                  {brand.summary}
-                </p>
+                <p className="mt-3 text-lead text-white/75">{brand.summary}</p>
               </div>
-              <p className="text-sm font-semibold uppercase tracking-[0.12em] text-white/65">
+              <p className="text-caption font-bold tracking-[0.14em] uppercase text-steel">
                 {getProjectCountLabel(brand.projects.length)}
               </p>
             </div>
           </div>
         </section>
 
-        <section className="bg-paper pb-[clamp(3rem,8vw,6.5rem)]">
-          <div className="container-page -mt-6 sm:-mt-8">
+        <section aria-label={`Projetos ${brand.name}`} className="bg-surface-muted py-section">
+          <div className="container-page">
             <BrandProjectsGrid brand={brand} />
           </div>
         </section>
 
-        {otherBrands.length > 0 && (
-          <section className="border-t border-line/70 bg-paper-2 py-12 sm:py-16">
+        {relatedBrands.length > 0 && (
+          <section aria-labelledby="related-brands-title" className="bg-surface-soft py-section">
             <div className="container-page">
-              <p className="eyebrow">Outras marcas</p>
-              <h2 className="display mt-3 text-[clamp(1.4rem,4vw,2rem)]">Continue explorando</h2>
-              <ul className="mt-8 grid grid-cols-2 gap-3 sm:grid-cols-4 sm:gap-4">
-                {otherBrands.map((item) => (
+              <SectionHeading eyebrow="Outras marcas" title="Continue explorando" titleId="related-brands-title" />
+              <ul className="mt-10 grid grid-cols-2 gap-4 lg:grid-cols-4 lg:gap-6">
+                {relatedBrands.map((item) => (
                   <li key={item.slug}>
                     <Link
                       href={`/portfolio/${item.slug}`}
-                      className="group relative block overflow-hidden rounded-[var(--radius-card)] bg-navy-950 aspect-[4/3]"
+                      className="group relative block aspect-[4/3] overflow-hidden rounded-[20px] bg-ink-deep"
                     >
                       <Image
                         src={item.cover}
                         alt=""
                         fill
-                        sizes="(max-width: 640px) 50vw, 25vw"
+                        sizes="(min-width: 1024px) 25vw, 50vw"
                         className="object-cover transition-transform duration-500 group-hover:scale-105"
                       />
-                      <span className="absolute inset-0 bg-navy-950/45" />
-                      <span className="absolute inset-x-0 bottom-0 p-3 font-display text-sm font-bold text-white sm:p-4 sm:text-base">
+                      <span className="absolute inset-0 bg-linear-to-t from-ink-deep/85 via-ink-deep/20 to-transparent" />
+                      <span className="absolute inset-x-0 bottom-0 p-4 text-heading font-semibold text-white">
                         {item.name}
                       </span>
                     </Link>
@@ -137,7 +134,7 @@ export default async function BrandPortfolioPage({ params }: PageProps) {
           </section>
         )}
       </main>
-      <Footer />
+      <SiteFooter />
     </>
   );
 }

@@ -1,29 +1,30 @@
-import Header from '@/components/Header';
-import Hero from '@/components/Hero';
-import Stats from '@/components/Stats';
-import Brands from '@/components/Brands';
-import Services from '@/components/Services';
-import Portfolio from '@/components/Portfolio';
-import Process from '@/components/Process';
-import Testimonials from '@/components/Testimonials';
-import Contact from '@/components/Contact';
-import Footer from '@/components/Footer';
+import SiteFooter from '@/components/layout/SiteFooter';
+import SiteHeader from '@/components/layout/SiteHeader';
+import AboutSection from '@/components/sections/AboutSection';
+import BrandsSection from '@/components/sections/BrandsSection';
+import EventStandsSection from '@/components/sections/EventStandsSection';
+import HeroSection from '@/components/sections/HeroSection';
+import ProcessSection from '@/components/sections/ProcessSection';
+import ProjectsSection from '@/components/sections/ProjectsSection';
+import StatsSection from '@/components/sections/StatsSection';
+import TestimonialsSection from '@/components/sections/TestimonialsSection';
+import { siteFeatures } from '@/lib/site';
 
-export default function Home() {
+export default function HomePage() {
   return (
     <>
-      <Header />
-      <main>
-        <Hero />
-        <Stats />
-        <Services />
-        <Brands />
-        <Portfolio />
-        <Process />
-        <Testimonials />
-        <Contact />
+      <SiteHeader />
+      <main className="pb-section">
+        <HeroSection />
+        <BrandsSection />
+        <AboutSection />
+        <ProcessSection />
+        <ProjectsSection />
+        <EventStandsSection />
+        <StatsSection />
+        {siteFeatures.isTestimonialsSectionVisible && <TestimonialsSection />}
       </main>
-      <Footer />
+      <SiteFooter />
     </>
   );
 }
